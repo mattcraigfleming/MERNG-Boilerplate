@@ -8,9 +8,12 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
 import Form from './Form';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Login from './Login';
+
 
 const TodosQuery = gql`
 {
@@ -113,17 +116,28 @@ class App extends Component {
     console.log(this.props);
     const {data: {loading, todos}} = this.props;
     if (loading) {
-      return <div>Loading </div>;
+      return (
+        <div style={{ display: 'flex'}}>
+        
+          <div style={{margin: 'auto', width: 400 }}>
+        <CircularProgress size={50} />
+        </div>
+        </div>
+      );
     }
     return (
-        <div style={{ display: 'flex'}}>
-          <div style={{margin: 'auto', width: 400 }}>
+      
+        <div style={{width: 100 + '%', alignContent: 'space-between'}}>
+       
+          <div style={{margin: 'auto', width: 90 + 'vw' }}>
+          <Login />
           <Paper elevation={1}>
           <div style={{padding:20}}>
           <Form submit={this.createTodo}/>
           </div>
          <List>
          {todos.map(todo => (
+          <Tooltip title={todo.complete ? 'Task Complete!' : `Created: ${todo.createdAt}`}>
            <ListItem
              key={todo.id}
              role={undefined}
@@ -131,30 +145,33 @@ class App extends Component {
              button
              onClick={() => this.updateTodo(todo)}
            >
-           <Tooltip title={todo.complete ? 'Task Complete!' : `Created: ${todo.createdAt}`}>
+           
              <Checkbox
                checked={todo.complete}
                tabIndex={-1}
                disableRipple
              />
-             </Tooltip>
+            
              <ListItemText primary={todo.text} secondary={todo.createdAt} />
              <ListItemSecondaryAction>
              <Tooltip title="Remove Todo">
                <IconButton onClick={() => this.removeTodo(todo)}>
-                 <CloseIcon  />
+                 <DeleteIcon />
                </IconButton>
               </Tooltip>
              </ListItemSecondaryAction>
            </ListItem>
+           </Tooltip>
          ))}
        </List>
          </Paper>
          </div>
+         
         </div>
     );
   }
 }
+
 
 
 export default compose(

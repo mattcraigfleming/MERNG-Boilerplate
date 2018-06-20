@@ -30,6 +30,8 @@ handleKeyDown = (e) => {
             onKeyDown={this.handleKeyDown}
             onChange={this.handleChange}
             value={text}
+            multiline
+            rowsMax="4"
             fullWidth
           />
         )
