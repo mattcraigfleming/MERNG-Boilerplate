@@ -14,7 +14,7 @@ new terminal
 
 `cd client` ```npm start```
 
-starts client server `localhost:3000
+starts client server `localhost:3000`
 
 ---
 
@@ -30,6 +30,7 @@ starts client server `localhost:3000
 
 ---
 
+Update mongoDB string point to localhost db or hosted db location
 
 
 ### Express
